@@ -37,16 +37,7 @@ function sendTextMessage(sender, text) {
     })
 }
 
-var menuMsg = """MENU
-VIEW: to view topics
-NEW: to add topics
-VET: to see who wants to talk
-TALK: to see your conversations
-ME: to edit your profile
-Terms: https://example.com/terms
-Help: https://example.com/help
-Standard message & data rates apply.
-"""
+var menuMsg = "MENU\nVIEW: to view topics\nNEW: to add topics\nVET: to see who wants to talk\nTALK: to see your conversations\nME: to edit your profile\nTerms: https://example.com/terms\nHelp: https://example.com/help\nStandard message & data rates apply."
 
 // for Facebook verification
 app.post('/webhook/', function (req, res) {
