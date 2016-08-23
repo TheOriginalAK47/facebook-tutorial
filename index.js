@@ -51,7 +51,7 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 
-const token = "EAAQXlBJnIlMBAJBvBHMJJWO2rfckZBHrZBkjOLdryjD17cl7RHTgU7Ag9iQGik7Sf3uyYvKnokYKfhHivAziab6EBM0U0AUxX0HY4xkGQZAEnzKZBjQD35cQSx1qMP7ZBtzZCxbs1ZC5BMS4DL5MLXfYUlImdNejQTBgAWd1v4IfgZDZD"
+const token = process.env.FB_PAGE_ACCESS_TOKEN
 
 // Spin up the server
 app.listen(app.get('port'), function() {
