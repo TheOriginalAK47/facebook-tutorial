@@ -37,6 +37,17 @@ function sendTextMessage(sender, text) {
     })
 }
 
+var menuMsg = """MENU
+VIEW: to view topics
+NEW: to add topics
+VET: to see who wants to talk
+TALK: to see your conversations
+ME: to edit your profile
+Terms: https://example.com/terms
+Help: https://example.com/help
+Standard message & data rates apply.
+"""
+
 // for Facebook verification
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
@@ -45,7 +56,13 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            if (text.toLowerCase() === "hi" || text.toLowerCase() === "hello") {
+                sendTextMessage(sender, "Welcome to MapleChat! Text MENU to get started!")
+            } else if (text.toLowerCase() === "menu") {
+                sendTextMessage(sender, menuMsg)
+            } else {
+                sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            }
         }
     }
     res.sendStatus(200)
