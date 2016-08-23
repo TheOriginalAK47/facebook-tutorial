@@ -55,10 +55,10 @@ app.post('/webhook/', function (req, res) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
         if (event.message && event.message.text) {
-            let text = event.message.text
-            if (text.toLowerCase() === "hi" || text.toLowerCase() === "hello") {
+            let text = event.message.text.toLowerCase()
+            if (text === "hi" || text === "hello") {
                 sendTextMessage(sender, "Welcome to MapleChat! Text MENU to get started!")
-            } else if (text.toLowerCase() === "menu") {
+            } else if (text === "menu") {
                 sendTextMessage(sender, menuMsg)
             } else {
                 sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
