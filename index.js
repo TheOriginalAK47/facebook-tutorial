@@ -47,8 +47,7 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text.toLowerCase()
-            if (text != null && != "menu" && != "view" && != "new" && != "vet" && != "me") {
-                //=== "hi" || text === "hello"
+            if (text === "hi" || text === "hello") {
                 sendTextMessage(sender, "Welcome to MapleChat! Text MENU to get started!")
             } else if (text === "menu") {
                 sendTextMessage(sender, menuMsg)
