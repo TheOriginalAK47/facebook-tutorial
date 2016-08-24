@@ -3,6 +3,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
+const pg = require('pg')
 const app = express()
 
 app.set('port', (process.env.PORT || 5000))
@@ -17,6 +18,18 @@ app.use(bodyParser.json())
 app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot')
 })
+
+app.get('/db', function (request, response) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.render('pages/db', {results: result.rows} ); }
+    });
+  });
+});
 
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
@@ -38,13 +51,13 @@ function sendTextMessage(sender, text) {
 }
 
 var menuMsg = "MENU\nVIEW: to view topics\nNEW: to add topics\nVET: to see who wants to talk\nTALK: to see your conversations\nME: to edit your profile\nTerms: https://example.com/terms\nHelp: https://example.com/help\nStandard message & data rates apply."
-
 // for Facebook verification
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
+
         if (event.message && event.message.text) {
             let text = event.message.text.toLowerCase()
             if (text === "hi" || text === "hello") {
