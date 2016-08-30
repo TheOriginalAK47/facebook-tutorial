@@ -67,6 +67,7 @@ function isUser(sender) {
 
 function createNewUser (sender) {
   db.any('INSERT sender INTO USERS' )
+  sendTextMessage(sender, "not null, called isUser")
     .then(function(data) {
       res.ststus(200)
         .json({
@@ -93,6 +94,7 @@ app.post('/webhook/', function (req, res) {
             let text = event.message.text.toLowerCase()
             if (text =! null) {
                 isUser(sender)
+                sendTextMessage(sender, "not null, calling isUser")
                 // isUser(sender)
             } else{
                 createNewUser(sender)
