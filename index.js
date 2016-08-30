@@ -51,7 +51,6 @@ function sendTextMessage(sender, text) {
 }
 
 function isUser(sender) {
-    sendTextMessage(sender, "called isUser")
     db.any('SELECT sender FROM USERS')
      .then(function(data) {
        res.ststus(200)
