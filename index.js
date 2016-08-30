@@ -52,6 +52,7 @@ function sendTextMessage(sender, text) {
 
 function isUser(sender) {
     sendTextMessage(sender, "called isUser")
+    sendTextMessage(sender, sender)
     \set sender = sender
     sendTextMessage(sender, sender)
     db.any('SELECT sender FROM USERS')
@@ -99,7 +100,6 @@ app.post('/webhook/', function (req, res) {
             let text = event.message.text.toLowerCase()
             if (text =! null) {
                 isUser(sender)
-                console.log(sender)
             } else{
                 //This would be an empty message
                 sendTextMessage(sender, "null")
