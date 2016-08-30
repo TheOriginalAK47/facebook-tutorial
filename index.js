@@ -51,18 +51,19 @@ function sendTextMessage(sender, text) {
 }
 
 function isUser(sender) {
-  db.any('SELECT sender FROM USERS')
-    .then(function(data) {
-      res.ststus(200)
-        .json({
-          status: 'success',
-          data: data,
-          message: 'Queried USERS for sender'
-        });
-    })
-    .catch(function (err) {
-      return next(err);
-    });
+    sendTextMessage(sender, "called isUser")
+  // db.any('SELECT sender FROM USERS')
+  //   .then(function(data) {
+  //     res.ststus(200)
+  //       .json({
+  //         status: 'success',
+  //         data: data,
+  //         message: 'Queried USERS for sender'
+  //       });
+  //   })
+  //   .catch(function (err) {
+  //     return next(err);
+  //   });
 }
 
 function createNewUser (sender) {
@@ -93,10 +94,9 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text.toLowerCase()
             if (text =! null) {
-                sendTextMessage(sender, "not null, calling isUser")
-                // isUser(sender)
+                // sendTextMessage(sender, "not null, calling isUser")
+                isUser(sender)
             } else{
-                createNewUser(sender)
                 sendTextMessage(sender, "null")
             }
         }
