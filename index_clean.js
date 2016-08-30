@@ -37,21 +37,6 @@ function sendTextMessage(sender, text) {
     })
 }
 
-function createNewUser (sender) {
-  db.any('INSERT sender INTO USERS' )
-    .then(function(data) {
-      res.ststus(200)
-        .json({
-          status: 'success',
-          data: data,
-          message: 'Returned the state of the user_id session'
-        });
-    })
-    .catch(function (err) {
-      return next(err);
-    });
-}
-
 var menuMsg = "MENU\nVIEW: to view topics\nNEW: to add topics\nVET: to see who wants to talk\nTALK: to see your conversations\nME: to edit your profile\nTerms: https://example.com/terms\nHelp: https://example.com/help\nStandard message & data rates apply."
 
 // for Facebook verification
@@ -62,19 +47,17 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text.toLowerCase()
-            if (text =! null) {
-                sendTextMessage(sender, "not null")
-                // isUser(sender)
-            } else{
-                createNewUser(sender)
-                sendTextMessage(sender, "null")
+            if (text === "hi" || text === "hello") {
+                sendTextMessage(sender, "Welcome to MapleChat! Text MENU to get started!")
+            } else if (text === "menu") {
+                sendTextMessage(sender, menuMsg)
+            } else {
+                sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
             }
         }
     }
     res.sendStatus(200)
 })
-
-
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 
