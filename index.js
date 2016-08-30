@@ -50,6 +50,21 @@ function sendTextMessage(sender, text) {
     })
 }
 
+function isUser(sender) {
+  db.any('SELECT sender FROM USERS')
+    .then(function(data) {
+      res.ststus(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Queried USERS for sender'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
 function createNewUser (sender) {
   db.any('INSERT sender INTO USERS' )
     .then(function(data) {
@@ -65,6 +80,7 @@ function createNewUser (sender) {
     });
 }
 
+
 var menuMsg = "MENU\nVIEW: to view topics\nNEW: to add topics\nVET: to see who wants to talk\nTALK: to see your conversations\nME: to edit your profile\nTerms: https://example.com/terms\nHelp: https://example.com/help\nStandard message & data rates apply."
 // for Facebook verification
 app.post('/webhook/', function (req, res) {
@@ -76,7 +92,7 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text.toLowerCase()
             if (text =! null) {
-                sendTextMessage(sender, "not null")
+                isUser(sender)
                 // isUser(sender)
             } else{
                 createNewUser(sender)
