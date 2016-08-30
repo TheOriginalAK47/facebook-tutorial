@@ -93,8 +93,8 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text.toLowerCase()
             if (text =! null) {
-                isUser(sender)
                 sendTextMessage(sender, "not null, calling isUser")
+                isUser(sender)
                 // isUser(sender)
             } else{
                 createNewUser(sender)
