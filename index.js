@@ -14,6 +14,28 @@ app.use(bodyParser.urlencoded({extended: false}))
 // Process application/json
 app.use(bodyParser.json())
 
+// app.js
+Bot.init(
+  config.FBChatToken || '',
+  'SETUP_PLAY_GO_THIS_IS_RIGHT',
+  config.useFBChatLocalTest || false,
+);
+
+Bot.on('text', async (event: object) => {
+  // do something
+});
+
+Bot.on('attachments', async (event: object) => {
+  // do something
+});
+
+Bot.on('postback', async (event: object) => {
+  // do something
+});
+
+app.use('/webhook', Bot.router());
+// go to http://localhost:5000/webhook/localChat/ for local chat debugging
+
 // Index route
 app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot')
@@ -52,9 +74,6 @@ function sendTextMessage(sender, text) {
 
 function isUser(sender) {
     sendTextMessage(sender, "called isUser")
-    sendTextMessage(sender, sender)
-    \set sender = sender
-    sendTextMessage(sender, sender)
     db.any('SELECT sender FROM USERS')
      .then(function(data) {
        res.ststus(200)
